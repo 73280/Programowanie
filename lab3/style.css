@@ -1,0 +1,48 @@
+body{
+	font-family: calibri;
+	color: darkblue;
+}
+
+p{
+	text-align: center;
+	font-weight: bold;
+}
+
+table{
+	margin-right: auto;
+	margin-left: 45%;
+	border-collapse: collapse;
+	border: solid thin grey;
+	text-align: center;
+}
+
+tr:nth-child(even){
+	background-color: #9babc2;
+}
+
+td{
+	padding: 10px;
+	border: solid thin grey;
+}
+
+ul{
+	list-style: circle;
+}
+
+.naglowkowy{
+	
+	font-size: 2em;
+}
+
+.tekst{
+	margin: auto;
+	height: 200px;
+	width: 600px;
+	border: dashed;
+	overflow-y: scroll;
+	text-align: justify;
+}
+
+#odnosnik{
+	color: green;
+}
