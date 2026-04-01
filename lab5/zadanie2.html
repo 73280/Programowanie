@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+   </head>
+   <body>
+		<script>
+			function wypisywacz(a, b){
+				tabliczka = [];
+				for (let i = a; i <= b; i++){ 
+					if ((i%2) == 0){
+						tabliczka.push(i);
+					}
+				}
+				console.log(tabliczka);
+				for(var liczba of tabliczka){
+					console.log(liczba);
+				}
+			}
+			wypisywacz(2, 10); //To jest wywołanie funkcji
+		</script>
+   </body>
+</html>
