@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			#reset {display:inline-block;}
+			#stop {display:none;}
+		</style>
+	</head>
+	<body>
+		<h1 id="czas">
+			<span id="godziny">00</span>:<span id="minuty">00</span>:<span id="sekundy">00</span>
+		</h1>
+		<button id = "start" onclick="czasomierzStart()">START</button>
+		<button id = "zapisz">ZAPISZ</button>
+		<button id = "stop" onclick="czasomierzStop()">STOP</button>
+		<button id = "reset" onclick="czasomierzReset()">RESET</button>
+		<p id = "stan_stopera"></p>
+		<ul id = "zapisane_czasy">
+		</ul>
+		<script>
+			var sekunda = 0;
+			var minuta = 0;
+			var godzina = 0;
+			
+			function czasomierzStart(){
+				interwal = setInterval(tick, 1000);
+				document.getElementById("start").style.display = "none";
+				document.getElementById("stop").style.display = "inline-block";
+			}
+			function czasomierzReset(){
+				sekunda = 0;
+				minuta = 0;
+				godzina = 0;
+				clearInterval(interwal);
+				pokaz();
+			}
+			function tick(){
+				sekunda += 1
+				if (sekunda == 60) {
+					sekunda = 0;
+					minuta =+ 1;
+				}
+				if (minuta == 60) {
+					minuta = 0;
+					godzina +=1
+				}
+				pokaz();
+			}
+			function pokaz(){
+				if (godzina < 10){
+					document.getElementById("godziny").innerHTML = "0"+godzina;
+				}else{
+					document.getElementById("godziny").innerHTML = godzina;
+				}
+				
+				if (minuta < 10){
+					document.getElementById("minuty").innerHTML = "0"+minuta;
+				}else{
+					document.getElementById("minuty").innerHTML = minuta;
+				}
+				
+				if (sekunda < 10){
+					document.getElementById("sekundy").innerHTML = "0"+sekunda;
+				}else{
+					document.getElementById("sekundy").innerHTML = sekunda;
+				}
+			}
+			function czasomierzStop(){
+				clearInterval(interwal);
+				document.getElementById("start").style.display = "inline-block";
+				document.getElementById("stop").style.display = "none";
+			}
+			function czasomierzZapisz(){
+				
+			}
+		</script>
+	</body>
+</html>
