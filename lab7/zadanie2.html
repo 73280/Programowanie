@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<form action="" method="get" name="kalkulatorek">
+			Nazwa użytkownika: <input type="text" id="nazwa"/><br>
+			Email: <input type="email" id="email"/><br>
+			Hasło: <input type="password" id="haslo"/><br>
+			Powtórz hasło: <input type="password" id="powtorne_haslo"/><br>
+			Data urodzenia: <input type="date" id="data_urodzenia"/><br>
+			Płeć:
+			<select>
+				<option value="m">Mężczyzna</option>
+				<option value="k">Kobieta</option>
+				<option value="n">Nie chcę podawać</option>
+			</select><br>
+			<input type="checkbox" id="regulamin"/> Akceptuję regulamin<br>
+			<input type="radio" name="wersja" value="1"/>Wersja darmowa<br>
+			<input type="radio" name="wersja" value="1"/>Wersja standardowa<br>
+			<input type="radio" name="wersja" value="1"/>Wersja premium<br>
+			<input type="reset" value="Wyczyść">
+		</form>
+		<button onclick="sprawdz()">Zarejestruj się</button>
+		
+		<span id="wynik"></span>
+		
+		<script>
+			function sprawdz(){
+				
+			}
+		</script>
+	</body>
+</html>

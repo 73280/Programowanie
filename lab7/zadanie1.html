@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<form action="" method="get" name="kalkulatorek">
+			<input type="number" id="a"/> ÷ <input type="number" id="b"/>
+		</form>
+		<button onclick="dziel()">Dziel i rządź!</button>
+		<span id="wynik"></span>
+		<script>
+			function dziel(){
+					var a = document.getElementById("a").value;
+					var b = document.getElementById("b").value;
+					
+					try{
+						wynik = a/b;
+						document.getElementById("wynik").innerHTML = wynik;
+					}catch(blad){
+						document.getElementById("wynik").innerHTML = "Błąd obliczeń, możliwe, że wpisałeś jakąś wartość źle! "+blad;
+					}
+			}
+		</script>
+	</body>
+</html>
