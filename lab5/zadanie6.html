@@ -7,15 +7,39 @@
 		<script>
 			function choinka(n){
 				var pieterko = 1;
-				for (var i = 0; i <= n; i++;){
-						for(var j = 1; j<pieterko ; j++){
-							pieterkoconsole.log("*");
-						}
+				for (var i = 0; i < n; i++){
+					pieterko_str = "";
+					for(var j = 1; j<=(n*2-1-pieterko)/2; j++){
+						pieterko_str +=" ";
+					}
+					for(var j = 1; j<=pieterko; j++){
+						pieterko_str +="*";
+					}
+					console.log(pieterko_str);
 					pieterko +=2;
-				}				
+				}
+				if(n>3){
+					for(var i = 0; i < 2; i++){
+						pieterko_str = "";
+						for(var j = 1; j<=(n*2-4)/2; j++){
+							pieterko_str +=" ";
+						}
+						pieterko_str +="***";
+						console.log(pieterko_str);
+					}
+				}else{
+					for(var i = 0; i < 2; i++){
+						pieterko_str = "";
+						for(var j = 1; j<=(n*2-1)/2; j++){
+							pieterko_str +=" ";
+						}
+						pieterko_str +="*";
+						console.log(pieterko_str);
+					}
+				}			
 			}
 			
-			choinka(2); //To jest wywołanie funkcji
+			choinka(8); //To jest wywołanie funkcji
 		</script>
    </body>
 </html>

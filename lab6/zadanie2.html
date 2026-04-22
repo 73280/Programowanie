@@ -3,7 +3,9 @@
 		<meta charset="utf-8">
 		<style>
 			#reset {display:inline-block;}
+			#start {display:inline-block;}
 			#stop {display:none;}
+			#reset {display:none;}
 		</style>
 	</head>
 	<body>
@@ -11,8 +13,8 @@
 			<span id="godziny">00</span>:<span id="minuty">00</span>:<span id="sekundy">00</span>
 		</h1>
 		<button id = "start" onclick="czasomierzStart()">START</button>
-		<button id = "zapisz">ZAPISZ</button>
 		<button id = "stop" onclick="czasomierzStop()">STOP</button>
+		<button id = "zapisz" onclick="czasomierzZapisz()">ZAPISZ</button>
 		<button id = "reset" onclick="czasomierzReset()">RESET</button>
 		<p id = "stan_stopera"></p>
 		<ul id = "zapisane_czasy">
@@ -21,18 +23,28 @@
 			var sekunda = 0;
 			var minuta = 0;
 			var godzina = 0;
+			var uruchomiony = false;
 			
 			function czasomierzStart(){
+				uruchomiony = true;
 				interwal = setInterval(tick, 1000);
-				document.getElementById("start").style.display = "none";
+				document.getElementById("stan_stopera").innerHTML = "Odliczanie...";
 				document.getElementById("stop").style.display = "inline-block";
+				document.getElementById("start").style.display = "none";
+				document.getElementById("reset").style.display = "none";
 			}
 			function czasomierzReset(){
+				if(uruchomiony){
+					clearInterval(interwal);
+					interwal = setInterval(tick, 1000);
+					
+				}
 				sekunda = 0;
 				minuta = 0;
 				godzina = 0;
-				clearInterval(interwal);
 				pokaz();
+				document.getElementById("zapisane_czasy").innerHTML = "";
+				document.getElementById("stan_stopera").innerHTML = "";
 			}
 			function tick(){
 				sekunda += 1
@@ -66,12 +78,36 @@
 				}
 			}
 			function czasomierzStop(){
+				uruchomiony = false;
 				clearInterval(interwal);
+				document.getElementById("stan_stopera").innerHTML = "Wstrzymano";
 				document.getElementById("start").style.display = "inline-block";
+				document.getElementById("reset").style.display = "inline-block";
 				document.getElementById("stop").style.display = "none";
 			}
 			function czasomierzZapisz(){
+				czas = "";
+				if (godzina < 10){
+					czas = "0"+godzina;
+				}else{
+					czas = godzina;
+				}
 				
+				if (minuta < 10){
+					czas += ":0"+minuta;
+				}else{
+					czas += ":"+minuta;
+				}
+				
+				if (sekunda < 10){
+					czas += ":0"+sekunda;
+				}else{
+					czas += ":"+sekunda;
+				}
+				var obiekt = document.createElement("li");
+				var czasdozapisania = document.createTextNode(czas);
+				obiekt.append(czasdozapisania);
+				document.getElementById("zapisane_czasy").appendChild(obiekt);
 			}
 		</script>
 	</body>

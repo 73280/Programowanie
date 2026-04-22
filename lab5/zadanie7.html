@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+   </head>
+   <body>
+		<script>
+			function decToHex(dz){
+				var reszty = []
+				while(dz>1){
+					var wynik = Math.floor(dz / 16)
+					var reszta = dz % 16
+					reszty.push(reszta)
+					dz = wynik
+				}
+				stringi = ""
+				for(i = reszty.length; i > 0; i-- ){
+					switch(reszty[i-1]){
+						case 15:
+							stringi += "F"
+							break
+						case 14:
+							stringi += "E"
+							break
+						case 13:
+							stringi += "D"
+							break
+						case 12:
+							stringi += "C"
+							break
+						case 11:
+							stringi += "B"
+							break
+						case 10:
+							stringi += "A"
+							break
+						default:
+							stringi += reszty[i-1]
+							break
+					}
+				}
+				console.log(stringi)
+			}
+			decToHex(47802)
+		</script>
+   </body>
+</html>
