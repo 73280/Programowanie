@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<form action="" method="get" name="dane">
+			<input type="number" id="x"/><br>
+			<input type="number" id="y"/><br>
+		</form>
+		<button onclick="policz()">Zapisz</button>
+		<span id="wynik"></span>
+		<script>
+			class ComplexNumber{
+				constructor(x, y){
+					this.re = x
+					this.im = y
+				}
+				wypisz(){
+					if(this.im>0){
+						console.log(this.re+"+"+this.im+"i")
+					}else{
+						console.log(String(this.re)+String(this.im)+"i")
+					}
+				}
+				module(){
+					return Math.sqrt(this.re*this.re+this.im*this.im)
+				}
+			};
+			function policz(){
+				var x = parseFloat(document.getElementById("x").value)
+				var y = parseFloat(document.getElementById("y").value)
+				zespolona = new ComplexNumber(x, y);
+				zespolona.wypisz()
+				console.log(zespolona.module())
+			}
+		</script>
+	</body>
+</html>

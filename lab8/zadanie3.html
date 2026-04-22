@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<form action="" method="get" name="dane">
+			<input type="number" id="n"/><br>
+		</form>
+		<button onclick="policz()">Zapisz</button>
+		<span id="wynik"></span>
+		<script>
+			class ComplexNumber{
+				constructor(x, y){
+					this.re = x
+					this.im = y
+				}
+				wypisz(){
+					if(this.im>0){
+						console.log(this.re+"+"+this.im+"i")
+					}else{
+						console.log(String(this.re)+String(this.im)+"i")
+					}
+				}
+				module(){
+					return Math.sqrt(this.re*this.re+this.im*this.im)
+				}
+			};
+			function nzespolonych(n){
+				var tabliczka = [] 
+				for (var i=1; i<=n; i++){
+					x = Math.floor(Math.random() * 10)
+					y = Math.floor(Math.random() * 10)
+					tymczas = new ComplexNumber(x, y)
+					tabliczka.push(tymczas)
+				}
+				return tabliczka;
+			}
+			function policz(n){
+				var n = parseFloat(document.getElementById("n").value)
+				tabliczka = nzespolonych(n)
+				console.log(tabliczka)
+				tabliczka[n-1].wypisz();
+			}
+		</script>
+	</body>
+</html>

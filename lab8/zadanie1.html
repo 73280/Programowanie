@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<form action="" method="get" name="dane">
+			Imię: <input type="text" id="imie"/><br>
+			Nazwisko: <input type="text" id="nazwisko"/><br>
+			Wiek: <input type="number" id="wiek"/><br>
+		</form>
+		<button onclick="podmien()">Zapisz</button>
+		<span id="wynik"></span>
+		<script>
+			function podmien(){
+				const osoba = {
+					imie: document.getElementById("imie").value,
+					nazwisko: document.getElementById("nazwisko").value,
+					wiek: document.getElementById("wiek").value
+				}
+				
+				console.log(osoba)
+				console.log(osoba.imie)
+				console.log(osoba.nazwisko)
+				console.log(osoba.wiek)
+				
+				json = JSON.stringify(osoba)
+				console.log(json)
+			}
+		</script>
+	</body>
+</html>
