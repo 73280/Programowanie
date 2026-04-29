@@ -1,0 +1,128 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css"
+	</head>
+	<body>
+		<div id="cookies">
+			<img src="cookies.jpg"/><br>
+			Ta strona używa plików cookies.<br>
+			<button onclick="zaakceptuj_cookies()">Zaakceptuj</button><br>
+			<small>Uwaga: drogi użytkowniku, w trosce o twoją świadomość, ta wiadomość będzie przypominana przy każdym wejściu na stronę (wiem że mogłem zapisać czy zostało to wyświetlone do local storage, ale tak jest śmieszniej)</small>
+		</div>
+		<script>
+			function zaakceptuj_cookies(){
+				document.getElementById("cookies").style.display = "none";
+			}
+		</script>
+		
+		<h1 id="wynik">0</h1>
+		<button id="klik">Kliknij mnie!</button>
+		<button id="ulepsz-klik-przycisk">Moc kliknięcia(<span id="klik-cena-etykieta">1</span>)</button>
+		<p>Moc kliknięcia: <span id="klik-moc-etykieta">1</span></p>
+		
+		<button id="klik-pasywne-przycisk">Ulepsz pasywne kliknięcia(<span id="klik-pasywne-cena-etykieta">1</span>)</button>
+		<p>Pasywne kliknięcia: <span id="klik-pasywne-etykieta">1</span></p>
+		
+		<script>
+			var wynikEtykieta = document.getElementById("wynik")
+			var klikPrzycisk = document.getElementById("klik")
+			
+			var ulepszKlikPrzycisk = document.getElementById("ulepsz-klik-przycisk")
+			var klikMocCenaEtykieta = document.getElementById("klik-cena-etykieta")
+			var klikMocEtykieta = document.getElementById("klik-moc-etykieta")
+			
+			var klikPasywnePrzycisk = document.getElementById("klik-pasywne-przycisk")
+			var klikPasywneCenaEtykieta = document.getElementById("klik-pasywne-cena-etykieta")
+			var klikPasywneEtykieta = document.getElementById("klik-pasywne-etykieta")
+			
+			window.onload = _ => {
+				let wynik = localStorage.getItem("wynik")
+				let klikMoc = localStorage.getItem("klikMoc")
+				let klikPasywne = localStorage.getItem("klikPasywne")
+				let data = localStorage.getItem("data")
+				
+				if (!wynik){
+					localStorage.setItem("wynik", 0)
+				}
+				if (!klikMoc){
+					localStorage.setItem("klikMoc", 1)
+				}
+				if (!klikPasywne){
+					localStorage.setItem("klikPasywne", 0)
+				}
+				const klikPasywnePrzyrost = _ =>{
+					let klikPasywne = parseInt(localStorage.getItem("klikPasywne"))
+					dodajPunkty(klikPasywne-1)
+					localStorage.setItem("data", new Date())
+				}
+				setInterval(klikPasywnePrzyrost, 1000)
+				if(!data){
+					localStorage.setItem("data", new Date())
+				}else{
+					let dataBiezaca = new Date()
+					localStorage.setItem("data", dataBiezaca)
+					let dataOstatnia = new Date(data)
+					let roznica = Math.floor((dataBiezaca - dataOstatnia) / 1000)
+					dodajPunkty(roznica * parseInt(klikPasywne))
+				}
+				
+				aktualizujStrone();
+			}
+			
+			function aktualizujStrone(){
+				let wynik = localStorage.getItem("wynik")
+				let klikMoc = localStorage.getItem("klikMoc")
+				let klikPasywne = localStorage.getItem("klikPasywne")
+				let data = localStorage.getItem("data")
+				
+				wynikEtykieta.innerHTML = wynik
+				klikMocEtykieta.innerHTML = klikMoc
+				klikPasywneEtykieta.innerHTML = klikPasywne-1
+				
+				let klikMocCena = Math.round(25*(1.3**parseInt(klikMoc)))
+				let klikPasywneCena = Math.round(25*(1.6**parseInt(klikPasywne)))
+				klikMocCenaEtykieta.innerHTML = klikMocCena
+				klikPasywneCenaEtykieta.innerHTML = klikPasywneCena
+				
+			}
+			
+			function dodajPunkty(x){
+				let wynik = parseInt(localStorage.getItem("wynik"))
+				localStorage.setItem("wynik", wynik + x)
+				aktualizujStrone()
+			}
+			
+			klikPrzycisk.onclick = _ =>{
+				let klikMoc = parseInt(localStorage.getItem("klikMoc"))
+				dodajPunkty(klikMoc)
+			}
+			
+			ulepszKlikPrzycisk.onclick = _ =>{
+				let wynik = parseInt(localStorage.getItem("wynik"))
+				let klikMoc = parseInt(localStorage.getItem("klikMoc"))
+				let klikMocCena = Math.round(25*(1.3**parseInt(klikMoc)))
+				if(wynik>=klikMocCena){
+					wynik = wynik - klikMocCena
+					klikMoc = klikMoc + 1;
+					localStorage.setItem("wynik", wynik)
+					localStorage.setItem("klikMoc", klikMoc)
+					aktualizujStrone()
+				}
+			}
+			
+			klikPasywnePrzycisk.onclick = _ =>{
+				let wynik = parseInt(localStorage.getItem("wynik"))
+				let klikPasywne = parseInt(localStorage.getItem("klikPasywne"))
+				let klikPasywneCena = Math.round(25*(1.6**parseInt(klikPasywne)))
+				if(wynik>=klikPasywneCena){
+					wynik = wynik - klikPasywneCena
+					klikPasywne = klikPasywne + 1;
+					localStorage.setItem("wynik", wynik)
+					localStorage.setItem("klikPasywne", klikPasywne)
+					aktualizujStrone()
+				}
+			}
+		</script>
+	</body>
+</html>
