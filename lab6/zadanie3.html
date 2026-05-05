@@ -6,16 +6,44 @@
 	</head>
 	<body>
 		<h1 id="czas">
-			<span id="godziny">00</span>:<span id="minuty">00</span>:<span id="sekundy">00</span>
+			<span id="dzien">00</span>.<span id="miesiac">00</span>.<span id="rok">0000</span> r.   <span id="godziny">00</span>:<span id="minuty">00</span>:<span id="sekundy">00</span>
 		</h1>
 		<button id = "pobierz" onclick="czasPobierz()">POBIERZ</button>
 		<script>
-			function czasPobierz(){
-				var zapytanie = new XMLHttpRequest()
-				var url = "https://timeapi.io/api/v1/time/current/zone?timezone=Europe%2FWarsaw"
-				zapytanie.open("GET", url , false )
-				zapytanie.send(null)
-				console.log(zapytanie.resposeText)
+			async function czasPobierz(){
+				const odpowiedz = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Europe/Warsaw")
+				const dane = await odpowiedz.json()
+				console.log(dane)
+				if(dane.day<10){
+					document.getElementById("dzien").innerHTML = "0"+dane.day
+				}else{
+					document.getElementById("dzien").innerHTML = dane.day
+				}
+				
+				if(dane.month<10){
+					document.getElementById("miesiac").innerHTML = "0"+dane.month
+				}else{
+					document.getElementById("miesiac").innerHTML = dane.month
+				}
+				document.getElementById("rok").innerHTML = dane.year
+
+				if(dane.hour<10){
+					document.getElementById("godziny").innerHTML = "0"+dane.hour
+				}else{
+					document.getElementById("godziny").innerHTML = dane.hour
+				}
+
+				if(dane.minute<10){
+					document.getElementById("minuty").innerHTML = "0"+dane.minute
+				}else{
+					document.getElementById("minuty").innerHTML = dane.minute
+				}
+
+				if(dane.seconds<10){
+					document.getElementById("sekundy").innerHTML = "0"+dane.seconds
+				}else{
+					document.getElementById("sekundy").innerHTML = dane.seconds
+				}
 			}
 		</script>
 	</body>

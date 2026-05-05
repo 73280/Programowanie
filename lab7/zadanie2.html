@@ -3,31 +3,152 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<form action="" method="get" name="kalkulatorek">
+		<form action="" method="get" name="formularz">
 			Nazwa użytkownika: <input type="text" id="nazwa"/><br>
 			Email: <input type="email" id="email"/><br>
 			Hasło: <input type="password" id="haslo"/><br>
 			Powtórz hasło: <input type="password" id="powtorne_haslo"/><br>
 			Data urodzenia: <input type="date" id="data_urodzenia"/><br>
 			Płeć:
-			<select>
+			<select id="plec">
 				<option value="m">Mężczyzna</option>
 				<option value="k">Kobieta</option>
 				<option value="n">Nie chcę podawać</option>
 			</select><br>
 			<input type="checkbox" id="regulamin"/> Akceptuję regulamin<br>
 			<input type="radio" name="wersja" value="1"/>Wersja darmowa<br>
-			<input type="radio" name="wersja" value="1"/>Wersja standardowa<br>
-			<input type="radio" name="wersja" value="1"/>Wersja premium<br>
+			<input type="radio" name="wersja" value="2"/>Wersja standardowa<br>
+			<input type="radio" name="wersja" value="3"/>Wersja premium<br>
 			<input type="reset" value="Wyczyść">
 		</form>
-		<button onclick="sprawdz()">Zarejestruj się</button>
-		
+		<button onclick="sprawdz()">Zarejestruj się</button><br>
+		<br>
 		<span id="wynik"></span>
 		
 		<script>
 			function sprawdz(){
+				const nazwa = document.getElementById("nazwa").value
+				const mail = document.getElementById("email").value
+				const haslo = document.getElementById("haslo").value
+				const powtorneHaslo = document.getElementById("powtorne_haslo").value
+				var dataUrodzenia = document.getElementById("data_urodzenia").value
+				const plec = document.getElementById("plec").value
+				const regulamin = document.getElementById("regulamin").checked
+
+				var blad = ""
+
+				var spanKomunikat = document.getElementById("wynik")
+
+				if(document.querySelector('input[name="wersja"]:checked')){
+					const wersja = parseInt(document.querySelector('input[name="wersja"]:checked').value)
+					var wersjaNazwa
+					switch(wersja){
+						case 1:
+							wersjaNazwa = "Darmowa"
+						break
+						case 2:
+							wersjaNazwa = "Standard"
+						break
+						case 3:
+							wersjaNazwa = "Premium"
+						break
+						default:
+							blad += "Niepoprawna wersja? "
+						break
+					}
+				}else{
+					blad += "Musisz zaznaczyć wersję usługi. "
+				}
 				
+				//Walidacja
+				if(!nazwa){
+					blad += "Pole nazwa nie może byś puste! "
+				}else{
+					const regex = /^[a-zA-Z0-9]+$/
+					const czySieZgadza = regex.test(nazwa)
+					if(!czySieZgadza){
+						blad += "Nazwa może się składać tylko z małych/dużych liter lub cyfr.  "
+					}
+				}
+
+				if(!mail){
+					blad += "Pole mail nie może byś puste! "
+				}else{
+					const regex = /^[^\s@]+@[^\s@]+.[^\s@]+$/
+					const czySieZgadza = regex.test(mail)
+					if(!czySieZgadza){
+						blad += "Adres E-mail musi być w formacie cos@cos.com .  "
+					}
+				}
+
+				if(!haslo){
+					blad += "Pole haslo nie może byś puste! "
+				}else{
+					const regex = /^(?=.*\d).{8,}$/
+					const czySieZgadza = regex.test(haslo)
+					if(!czySieZgadza){
+						blad += "Hasło musi się składać z co najmniej 8 znaków oraz posiadać co najmniej jedną cyfrę.  "
+					}
+				}
+
+				if(!powtorneHaslo){
+					blad += "Pole powtórz hasło nie może byś puste! "
+				}else{
+					if(powtorneHaslo != haslo){
+						blad += "Hasła nie są takie same.  "
+					}
+				}
+
+				if(!dataUrodzenia){
+					blad += "Pole data urodzenia nie może byś puste! "
+					
+				}else{
+					dataUrodzenia = new Date(dataUrodzenia)
+					const aktualnaData = new Date()
+					const pelnoletniosc = new Date()
+					var dataUrodzeniaStandard = dataUrodzenia.toLocaleDateString('pl-PL', {day: '2-digit', month: '2-digit', year: 'numeric'});
+					pelnoletniosc.setFullYear(aktualnaData.getFullYear() - 18)
+					if(dataUrodzenia > pelnoletniosc){
+						blad += "Musisz mieć co najmniej 18 lat.  "
+					}
+				}
+
+				if(!plec){
+					blad += "Pole plec nie może byś puste! "
+				}else{
+					var plecNazwa
+					switch(plec){
+						case "m":
+							plecNazwa = "Mężczyzna"
+						break
+						case "k":
+							plecNazwa = "Kobieta"
+						break
+						case "n":
+							plecNazwa = "Nie chcę podawać"
+						break
+						default:
+							blad += "Niepoprawna płeć? "
+						break
+					}
+				}
+
+				if(!regulamin){
+					blad += "Musisz zaakceptować regulamin! "
+				}
+
+				if(!(blad==="")){
+					wynik.innerHTML = blad
+					wynik.style.color = "red"
+				}else{
+					wynik.innerHTML = 	`Nazwa użyszkodnika: ${nazwa}<br>
+										Hasło: ${"*".repeat(haslo.length)}<br>
+										Adres e-mail: ${mail}<br>
+										Data urodzenia: ${dataUrodzeniaStandard}<br>
+										Płeć: ${plecNazwa}<br>
+										Wybrana wersja: ${wersjaNazwa}`
+					wynik.style.color = "black"
+				}
 			}
 		</script>
 	</body>
